@@ -1,0 +1,21 @@
+from ics import Calendar, Event
+from datetime import datetime
+import os
+
+# 1. .ics 파일 생성할 폴더 설정
+output_dir = "ical_exports"
+os.makedirs(output_dir, exist_ok=True)
+
+# 2. Calendar와 Event 객체 생성
+cal = Calendar()
+event = Event()
+event.name = "Test Event"
+event.begin = datetime(2025, 6, 10, 18, 0)  # 시작 시간 설정
+cal.events.add(event)
+
+# 3. 파일 저장
+file_path = os.path.join(output_dir, "test.ics")
+with open(file_path, "w", encoding="utf-8") as f:
+    f.writelines(cal.serialize_iter())
+
+print(f"✅ .ics 파일 생성 완료: {file_path}")
